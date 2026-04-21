@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ૐ પ્લે હાઉસ</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    font-family: 'Noto Sans Gujarati', sans-serif;
+    background: #f7fbff;
+    color: #333;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 100px 20px 80px;
+    background: linear-gradient(180deg, #d6ecff 0%, #f4fbff 100%);
+    overflow: hidden;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ─── CLOUDS ─── */
+  .cloud-wrap {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .cloud {
+    position: absolute;
+    background: white;
+    border-radius: 50px;
+    opacity: 0.65;
+  }
+  /* pseudo-elements add the bumps on top */
+  .cloud::before,
+  .cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+  }
+
+  /* Cloud 1 */
+  .cloud1 {
+    width: 160px; height: 55px;
+    top: 22%;
+    animation: drift1 38s linear infinite;
+  }
+  .cloud1::before {
+    width: 70px; height: 70px;
+    top: -35px; left: 25px;
+  }
+  .cloud1::after {
+    width: 50px; height: 50px;
+    top: -25px; left: 75px;
+  }
+
+  /* Cloud 2 */
+  .cloud2 {
+    width: 120px; height: 45px;
+    bottom: 22%;
+    animation: drift2 52s linear infinite;
+  }
+  .cloud2::before {
+    width: 55px; height: 55px;
+    top: -28px; left: 18px;
+  }
+  .cloud2::after {
+    width: 40px; height: 40px;
+    top: -20px; left: 62px;
+  }
+
+  /* Cloud 3 — extra depth */
+  .cloud3 {
+    width: 90px; height: 35px;
+    top: 55%;
+    opacity: 0.4;
+    animation: drift3 65s linear infinite;
+  }
+  .cloud3::before {
+    width: 40px; height: 40px;
+    top: -20px; left: 12px;
+  }
+  .cloud3::after {
+    width: 30px; height: 30px;
+    top: -15px; left: 45px;
+  }
+
+  @keyframes drift1 {
+    from { transform: translateX(-220px); }
+    to   { transform: translateX(110vw);  }
+  }
+  @keyframes drift2 {
+    from { transform: translateX(110vw);  }
+    to   { transform: translateX(-200px); }
+  }
+  @keyframes drift3 {
+    from { transform: translateX(-150px); }
+    to   { transform: translateX(110vw);  }
+  }
+
+  /* ─── HERO TEXT ─── */
+  .hero-content { position: relative; z-index: 2; }
+
+  /* bubbles/animals in hero sit behind clouds too */
+  .hero .bubble,
+  .hero .float-animal { z-index: 1; }
+
+  .hero h1 {
+    font-size: clamp(28px, 6vw, 48px);
+    font-weight: 700;
+    color: #1a6faf;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  .hero p {
+    margin-top: 12px;
+    font-size: clamp(15px, 2.5vw, 20px);
+    color: #555;
+    animation: fadeUp 0.9s 0.2s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 50px 20px;
+  }
+
+  /* ─── MIDDLE SECTION DECORATIONS ─── */
+  .middle-section {
+    background: linear-gradient(135deg, #e8f4ff 0%, #fff 60%, #fef9e7 100%);
+    padding: 60px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Bubbles */
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.9), rgba(144,202,249,0.25));
+    border: 1.5px solid rgba(66,165,245,0.25);
+    animation: floatUp linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes floatUp {
+    0%   { transform: translateY(0) scale(1);   opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.7; }
+    100% { transform: translateY(-110%) scale(1.1); opacity: 0; }
+  }
+
+  /* Animals / emojis floating */
+  .float-animal {
+    position: absolute;
+    font-size: 28px;
+    animation: animalFloat ease-in-out infinite;
+    pointer-events: none;
+    opacity: 0.55;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08));
+  }
+
+  @keyframes animalFloat {
+    0%,100% { transform: translateY(0px) rotate(-4deg); }
+    50%      { transform: translateY(-18px) rotate(4deg); }
+  }
+
+  .middle-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  /* ─── CARD ─── */
+  .card {
+    background: white;
+    padding: 36px 32px;
+    border-radius: 20px;
+    line-height: 2;
+    box-shadow: 0 16px 40px rgba(66,165,245,0.12);
+    border-top: 4px solid #42a5f5;
+  }
+
+  .card p {
+    font-size: clamp(14px, 1.6vw, 16px);
+    margin-bottom: 14px;
+    color: #444;
+  }
+
+  .card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .card .tag {
+    background: #e3f2fd;
+    color: #1565c0;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* ─── HIGHLIGHT ─── */
+  .highlight {
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    padding: 16px 20px;
+    border-left: 5px solid #ff9800;
+    border-radius: 10px;
+    margin: 18px 0;
+    font-weight: 700;
+    font-size: clamp(14px, 1.8vw, 16px);
+    color: #e65100;
+    box-shadow: 0 4px 14px rgba(255,152,0,0.15);
+  }
+
+  /* ─── STATS / RIGHT PANEL ─── */
+  .stat-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .stat-box {
+    background: white;
+    border-radius: 18px;
+    padding: 22px 26px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+    transition: transform 0.3s;
+  }
+
+  .stat-box:hover { transform: translateX(6px); }
+
+  .stat-icon {
+    font-size: 36px;
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #e3f2fd;
+  }
+
+  .stat-text strong {
+    display: block;
+    font-size: clamp(15px, 2vw, 17px);
+    color: #1a6faf;
+    font-weight: 700;
+  }
+
+  .stat-text span {
+    font-size: 13px;
+    color: #777;
+  }
+
+  /* ─── FEATURES ─── */
+  .features-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-top: 30px;
+  }
+
+  .feature {
+    background: white;
+    padding: 28px 14px 22px;
+    border-radius: 18px;
+    text-align: center;
+    font-size: clamp(13px, 1.5vw, 15px);
+    font-weight: 600;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    cursor: default;
+    line-height: 1.5;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #42a5f5, #81d4fa);
+    border-radius: 18px 18px 0 0;
+  }
+
+  .feature span.icon {
+    display: block;
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  .feature:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 30px rgba(66,165,245,0.18);
+  }
+
+  /* ─── SECTION HEADING ─── */
+  .section-title {
+    text-align: center;
+    font-size: clamp(20px, 4vw, 28px);
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #1a6faf;
+  }
+
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #42a5f5, #81d4fa);
+    border-radius: 4px;
+    margin: 10px auto 0;
+  }
+
+  /* ─── CAROUSEL ─── */
+  .carousel-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 10px 20px 60px;
+  }
+
+  /* Animated border wrapper */
+  .carousel-border {
+    padding: 3px;
+    border-radius: 24px;
+    background: linear-gradient(90deg, #90caf9, #42a5f5, #b3e5fc, #42a5f5, #90caf9);
+    background-size: 300% 100%;
+    animation: borderFlow 4s linear infinite;
+    box-shadow: 0 0 18px rgba(66,165,245,0.35), 0 0 40px rgba(144,202,249,0.2);
+  }
+
+  @keyframes borderFlow {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  .carousel-wrap {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #000;
+    user-select: none;
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .carousel-track img {
+    min-width: 100%;
+    width: 100%;
+    height: 460px;
+    object-fit: cover;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  /* Arrows */
+  .carr-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.92);
+    border: none;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    transition: background 0.2s, transform 0.2s;
+    display: flex; align-items: center; justify-content: center;
+    color: #1a6faf;
+    font-weight: 700;
+  }
+  .carr-btn:hover {
+    background: #42a5f5;
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+  }
+  .carr-prev { left: 14px; }
+  .carr-next { right: 14px; }
+
+  /* Dots */
+  .carr-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .carr-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #b0d4f0;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    border: none;
+    padding: 0;
+  }
+  .carr-dot.active {
+    background: #42a5f5;
+    transform: scale(1.35);
+  }
+
+  /* Counter */
+  .carr-counter {
+    position: absolute;
+    bottom: 14px;
+    right: 18px;
+    background: rgba(0,0,0,0.45);
+    color: white;
+    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .carousel-track img { height: 240px; }
+    .carr-btn { width: 36px; height: 36px; font-size: 16px; }
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 50px 20px 40px;
+    background: linear-gradient(180deg, #f4fbff 0%, #d6ecff 100%);
+  }
+
+  footer h3 {
+    font-size: clamp(20px, 4vw, 26px);
+    color: #1a6faf;
+    margin-bottom: 14px;
+  }
+
+  footer p {
+    font-size: clamp(13px, 2vw, 15px);
+    line-height: 2;
+    color: #444;
+    margin-bottom: 6px;
+  }
+
+  .btn-group {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Noto Sans Gujarati', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    transition: transform 0.25s, box-shadow 0.25s, filter 0.25s;
+    white-space: nowrap;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+  }
+
+  .btn:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.22);
+    filter: brightness(1.08);
+  }
+
+  .btn svg {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  /* YouTube — red */
+  .btn-yt {
+    background: #ff0000;
+    color: white;
+  }
+
+  /* Instagram — gradient */
+  .btn-ig {
+    background: linear-gradient(135deg, #f58529 0%, #dd2a7b 40%, #8134af 70%, #515bd4 100%);
+    color: white;
+  }
+
+  /* WhatsApp — green */
+  .btn-wa {
+    background: #25d366;
+    color: white;
+  }
+
+  /* ─── MOBILE TWEAKS ─── */
+  @media (max-width: 780px) {
+    .middle-inner {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero {
+      padding: 80px 16px 60px;
+      min-height: 220px;
+    }
+
+    .middle-section {
+      padding: 40px 16px;
+    }
+
+    .features {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery img {
+      height: 140px;
+    }
+
+    .card {
+      padding: 22px 18px;
+    }
+  }
+
+
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="cloud-wrap">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+  </div>
+
+  <!-- Hero Bubbles -->
+  <div class="bubble" style="width:16px;height:16px;left:6%;bottom:8%;animation-duration:7s;animation-delay:0s;"></div>
+  <div class="bubble" style="width:24px;height:24px;left:14%;bottom:5%;animation-duration:9s;animation-delay:1.2s;"></div>
+  <div class="bubble" style="width:12px;height:12px;left:28%;bottom:12%;animation-duration:6s;animation-delay:0.5s;"></div>
+  <div class="bubble" style="width:20px;height:20px;left:42%;bottom:6%;animation-duration:8s;animation-delay:2s;"></div>
+  <div class="bubble" style="width:10px;height:10px;left:57%;bottom:10%;animation-duration:5.5s;animation-delay:0.3s;"></div>
+  <div class="bubble" style="width:28px;height:28px;left:70%;bottom:5%;animation-duration:10s;animation-delay:1.5s;"></div>
+  <div class="bubble" style="width:14px;height:14px;left:82%;bottom:14%;animation-duration:7.5s;animation-delay:3s;"></div>
+  <div class="bubble" style="width:18px;height:18px;left:91%;bottom:8%;animation-duration:8.5s;animation-delay:0.8s;"></div>
+  <div class="bubble" style="width:22px;height:22px;left:3%;bottom:25%;animation-duration:9.5s;animation-delay:2.5s;"></div>
+  <div class="bubble" style="width:11px;height:11px;left:96%;bottom:20%;animation-duration:6.5s;animation-delay:1.8s;"></div>
+
+  <!-- Hero Floating Animals -->
+  <div class="float-animal" style="left:2%;top:15%;animation-duration:4s;animation-delay:0s;">🦋</div>
+  <div class="float-animal" style="left:7%;top:65%;animation-duration:5s;animation-delay:1s;">🐦</div>
+  <div class="float-animal" style="left:88%;top:18%;animation-duration:4.5s;animation-delay:0.5s;">🐝</div>
+  <div class="float-animal" style="left:93%;top:58%;animation-duration:6s;animation-delay:2s;">🦜</div>
+  <div class="float-animal" style="left:18%;top:78%;animation-duration:5.5s;animation-delay:1.5s;font-size:22px;">🌸</div>
+  <div class="float-animal" style="left:75%;top:72%;animation-duration:4.8s;animation-delay:0.8s;font-size:20px;">🌼</div>
+  <div class="float-animal" style="left:45%;top:8%;animation-duration:5s;animation-delay:3s;font-size:20px;">⭐</div>
+  <div class="float-animal" style="left:60%;top:80%;animation-duration:4.2s;animation-delay:2.2s;">🐞</div>
+  <div class="float-animal" style="left:33%;top:10%;animation-duration:6s;animation-delay:0.3s;font-size:22px;">🌺</div>
+
+  <div class="hero-content">
+    <h1>ૐ પ્લે હાઉસ</h1>
+    <p>જ્ઞાન સાથે ગમ્મત અને ગમ્મત સાથેનું જ્ઞાન</p>
+  </div>
+</div>
+
+<!-- DETAILS -->
+<div class="middle-section">
+
+  <!-- Bubbles -->
+  <div class="bubble" style="width:18px;height:18px;left:5%;bottom:10%;animation-duration:7s;animation-delay:0s;"></div>
+  <div class="bubble" style="width:28px;height:28px;left:12%;bottom:5%;animation-duration:9s;animation-delay:1.5s;"></div>
+  <div class="bubble" style="width:14px;height:14px;left:22%;bottom:15%;animation-duration:6s;animation-delay:0.8s;"></div>
+  <div class="bubble" style="width:22px;height:22px;left:35%;bottom:8%;animation-duration:8s;animation-delay:2.2s;"></div>
+  <div class="bubble" style="width:12px;height:12px;left:48%;bottom:12%;animation-duration:5.5s;animation-delay:0.3s;"></div>
+  <div class="bubble" style="width:30px;height:30px;left:60%;bottom:6%;animation-duration:10s;animation-delay:1s;"></div>
+  <div class="bubble" style="width:16px;height:16px;left:72%;bottom:18%;animation-duration:7.5s;animation-delay:3s;"></div>
+  <div class="bubble" style="width:24px;height:24px;left:83%;bottom:9%;animation-duration:8.5s;animation-delay:0.6s;"></div>
+  <div class="bubble" style="width:10px;height:10px;left:92%;bottom:14%;animation-duration:6.5s;animation-delay:2s;"></div>
+  <div class="bubble" style="width:20px;height:20px;left:3%;bottom:30%;animation-duration:9.5s;animation-delay:1.2s;"></div>
+  <div class="bubble" style="width:15px;height:15px;left:95%;bottom:25%;animation-duration:7s;animation-delay:4s;"></div>
+  <div class="bubble" style="width:26px;height:26px;left:55%;bottom:20%;animation-duration:11s;animation-delay:2.5s;"></div>
+
+  <!-- Floating Animals -->
+  <div class="float-animal" style="left:2%;top:18%;animation-duration:4s;animation-delay:0s;">🐦</div>
+  <div class="float-animal" style="left:8%;top:55%;animation-duration:5s;animation-delay:1s;">🐛</div>
+  <div class="float-animal" style="left:88%;top:20%;animation-duration:4.5s;animation-delay:0.5s;">🦋</div>
+  <div class="float-animal" style="left:92%;top:60%;animation-duration:6s;animation-delay:2s;">🐝</div>
+  <div class="float-animal" style="left:15%;top:80%;animation-duration:5.5s;animation-delay:1.5s;">🐞</div>
+  <div class="float-animal" style="left:78%;top:75%;animation-duration:4.8s;animation-delay:0.8s;">🦎</div>
+  <div class="float-animal" style="left:50%;top:5%;animation-duration:5s;animation-delay:3s;font-size:22px;">🌸</div>
+  <div class="float-animal" style="left:30%;top:85%;animation-duration:6.5s;animation-delay:0.2s;font-size:20px;">🌼</div>
+  <div class="float-animal" style="left:68%;top:88%;animation-duration:4.2s;animation-delay:2.5s;font-size:20px;">🌺</div>
+
+  <div class="middle-inner">
+
+    <!-- LEFT: Card -->
+    <div class="card">
+      <p>
+        શું તમારું બાળક અઢી થી છ વર્ષનું છે અને તમે તમારા બાળક માટે એક સારી પ્રી-સ્કૂલ શોધી રહ્યા છો?
+      </p>
+
+      <div class="highlight">
+        👉 આજે જ મુલાકાત લો અને આપના બાળકનું એડમિશન કરાવો
+      </div>
+
+      <p>
+        ૧૧ વર્ષ થી ચાલતા ૐ પ્લે હાઉસ માં... અને હવે LKG / HKG પ્રી-સ્કૂલ સાથે.....
+      </p>
+
+
+    </div>
+
+    <!-- RIGHT: Stats -->
+    <div class="stat-panel">
+      <div class="stat-box">
+        <div class="stat-icon">🏫</div>
+        <div class="stat-text">
+          <strong>૧૧+ વર્ષ નો અનુભવ</strong>
+          <span>વિશ્વાસ અને ઉત્કૃષ્ટ શિક્ષણ</span>
+        </div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">👶</div>
+        <div class="stat-text">
+          <strong>અઢી થી ૬ વર્ષ</strong>
+          <span>Playgroup, Nursery, LKG, HKG</span>
+        </div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">⏰</div>
+        <div class="stat-text">
+          <strong>સવારે 8:30 થી 12:00</strong>
+          <span>સોમ થી શનિ</span>
+        </div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">📍</div>
+        <div class="stat-text">
+          <strong>જામનગર</strong>
+          <span>લાલપુર, સરકારી હોસ્પિટલ પાસે</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="features-section">
+  <h2 class="section-title" style="margin-top:50px;">અમારી ખાસિયતો</h2>
+
+  <div class="features">
+    <div class="feature"><span class="icon">🎓</span>મજબૂત શિક્ષણ</div>
+    <div class="feature"><span class="icon">❤️</span>પ્રેમાળ વાતાવરણ</div>
+    <div class="feature"><span class="icon">🎨</span>પ્રવૃત્તિ આધારિત શિક્ષણ</div>
+    <div class="feature"><span class="icon">⚽</span>રમત-ગમત</div>
+    <div class="feature"><span class="icon">🎉</span>તહેવાર ઉજવણી</div>
+    <div class="feature"><span class="icon">🧠</span>સર્વાંગી વિકાસ</div>
+  </div>
+</div>
+
+<!-- CAROUSEL -->
+<div class="carousel-section">
+  <h2 class="section-title">અમારી પ્રવૃત્તિઓ</h2>
+
+  <div style="margin-top:28px;">
+    <div class="carousel-border">
+      <div class="carousel-wrap" id="carousel">
+        <div class="carousel-track" id="track">
+          <img src="1.jpeg"  alt="પ્રવૃત્તિ ૧">
+          <img src="2.jpeg"  alt="પ્રવૃત્તિ ૨">
+          <img src="3.jpeg"  alt="પ્રવૃત્તિ ૩">
+          <img src="4.jpeg"  alt="પ્રવૃત્તિ ૪">
+          <img src="5.jpeg"  alt="પ્રવૃત્તિ ૫">
+          <img src="6.jpeg"  alt="પ્રવૃત્તિ ૬">
+          <img src="7.jpeg"  alt="પ્રવૃત્તિ ૭">
+          <img src="8.jpeg"  alt="પ્રવૃત્તિ ૮">
+          <img src="9.jpeg"  alt="પ્રવૃત્તિ ૯">
+          <img src="10.jpeg" alt="પ્રવૃત્તિ ૧૦">
+          <img src="11.jpeg" alt="પ્રવૃત્તિ ૧૧">
+          <img src="12.jpeg" alt="પ્રવૃત્તિ ૧૨">
+          <img src="13.jpeg" alt="પ્રવૃત્તિ ૧૩">
+          <img src="14.jpeg" alt="પ્રવૃત્તિ ૧૪">
+          <img src="15.jpeg" alt="પ્રવૃત્તિ ૧૫">
+          <img src="16.jpeg" alt="પ્રવૃત્તિ ૧૬">
+          <img src="17.jpeg" alt="પ્રવૃત્તિ ૧૭">
+          <img src="18.jpeg" alt="પ્રવૃત્તિ ૧૮">
+          <img src="19.jpeg" alt="પ્રવૃત્તિ ૧૯">
+          <img src="20.jpeg" alt="પ્રવૃત્તિ ૨૦">
+        </div>
+
+        <button class="carr-btn carr-prev" id="prev" aria-label="Previous">&#8592;</button>
+        <button class="carr-btn carr-next" id="next" aria-label="Next">&#8594;</button>
+        <div class="carr-counter" id="counter">1 / 20</div>
+      </div>
+    </div>
+
+    <div class="carr-dots" id="dots"></div>
+  </div>
+</div>
+
+<script>
+  const track    = document.getElementById('track');
+  const prev     = document.getElementById('prev');
+  const next     = document.getElementById('next');
+  const dotsWrap = document.getElementById('dots');
+  const counter  = document.getElementById('counter');
+  const total    = 20;
+  let current    = 0;
+  let autoTimer;
+
+  // Build dots
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('button');
+    d.className = 'carr-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Slide ' + (i + 1));
+    d.addEventListener('click', () => { goTo(i); startAuto(); });
+    dotsWrap.appendChild(d);
+  }
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    counter.textContent = `${current + 1} / ${total}`;
+    document.querySelectorAll('.carr-dot').forEach((d, i) =>
+      d.classList.toggle('active', i === current)
+    );
+  }
+
+  function startAuto() {
+    stopAuto();
+    autoTimer = setInterval(() => goTo(current + 1), 3000);
+  }
+
+  function stopAuto() { clearInterval(autoTimer); }
+
+  prev.addEventListener('click', () => { goTo(current - 1); startAuto(); });
+  next.addEventListener('click', () => { goTo(current + 1); startAuto(); });
+
+  const wrap = document.getElementById('carousel');
+  wrap.addEventListener('mouseenter', stopAuto);
+  wrap.addEventListener('mouseleave', startAuto);
+
+  let touchStartX = 0;
+  wrap.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  wrap.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) { goTo(diff > 0 ? current + 1 : current - 1); startAuto(); }
+  });
+
+  startAuto();
+</script>
+
+<!-- FOOTER -->
+<footer>
+  <h3>ૐ પ્લે હાઉસ</h3>
+
+  <p>
+    📍 લાલપુર, સરકારી હોસ્પિટલ પાસે,<br>
+    પરેખ બાગ રોડ, જામનગર
+  </p>
+
+  <p>⏰ 8:30 થી 12:00 &nbsp;|&nbsp; 📞 8264639705</p>
+
+  <div class="btn-group">
+
+    <!-- YouTube -->
+    <a href="https://www.youtube.com/@omplayhouseactivities" class="btn btn-yt" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/>
+      </svg>
+      YouTube
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://instagram.com/omplayhouse_2015" class="btn btn-ig" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4a4.4 4.4 0 0 1 1.6 1 4.4 4.4 0 0 1 1 1.6c.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2a4.4 4.4 0 0 1-1 1.6 4.4 4.4 0 0 1-1.6 1c-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4a4.4 4.4 0 0 1-1.6-1 4.4 4.4 0 0 1-1-1.6c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2a4.4 4.4 0 0 1 1-1.6 4.4 4.4 0 0 1 1.6-1c.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0-2.2C8.7 0 8.3 0 7 .1 5.7.1 4.7.4 3.9.7A6.6 6.6 0 0 0 1.5 2.3 6.6 6.6 0 0 0 .3 4.7C0 5.5-.1 6.5 0 7.8-.1 9.1 0 9.5 0 12s0 2.9.1 4.2c0 1.3.3 2.3.6 3.1a6.6 6.6 0 0 0 1.6 2.4 6.6 6.6 0 0 0 2.4 1.6c.8.3 1.8.5 3.1.6C9.1 24 9.5 24 12 24s2.9 0 4.2-.1c1.3 0 2.3-.3 3.1-.6a6.6 6.6 0 0 0 2.4-1.6 6.6 6.6 0 0 0 1.6-2.4c.3-.8.5-1.8.6-3.1.1-1.3.1-1.7.1-4.2s0-2.9-.1-4.2c0-1.3-.3-2.3-.6-3.1A6.6 6.6 0 0 0 21.7.7C20.9.4 19.9.1 18.6.1 17.3 0 16.9 0 14.4 0h-2.4zm0 5.8a6.2 6.2 0 1 0 0 12.4A6.2 6.2 0 0 0 12 5.8zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z"/>
+      </svg>
+      Instagram
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/918264639705" class="btn btn-wa" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.5 14.4c-.3-.1-1.7-.8-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1a7.8 7.8 0 0 1-2.3-1.4 8.6 8.6 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.5-.6.3-.5.1-.5-1-2.3c-.2-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4A3.6 3.6 0 0 0 7 10c0 2.1 1.5 4.1 1.7 4.4.2.3 3 4.5 7.2 6.3a8.6 8.6 0 0 0 2.4.6c1 .1 1.9 0 2.6-.3.8-.4 1.5-1.3 1.7-2.5.2-.7.2-1.4.1-1.8-.1-.2-.3-.3-.7-.4zM12 21.8A9.8 9.8 0 0 1 6.7 20L2 21.2l1.2-4.5A9.9 9.9 0 1 1 12 21.8zm0-21.8C5.4 0 0 5.4 0 12c0 2.1.6 4.1 1.6 5.8L0 24l6.4-1.7A12 12 0 0 0 12 24c6.6 0 12-5.4 12-12S18.6 0 12 0z"/>
+      </svg>
+      WhatsApp
+    </a>
+
+  </div>
+</footer>
+
+</body>
+</html>
